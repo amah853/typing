@@ -1,4 +1,4 @@
-name: Build and Deploy Monkeytype 🐵🔥
+name: FORCE Deploy to GitHub Pages 🧨🔥
 
 on:
   push:
@@ -9,10 +9,10 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🔁
+      - name: Checkout 🛠️
         uses: actions/checkout@v3
 
       - name: Setup Node 🔧
@@ -20,16 +20,15 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies 📦
-        run: npm install
+      - name: Install Deps 📦
+        run: npm ci
 
-      - name: Build project 🏗️
+      - name: Build Site 🚀
         run: npm run build
 
-      - name: Deploy to GitHub Pages 🚀
+      - name: Deploy to gh-pages 📤
         uses: peaceiris/actions-gh-pages@v3
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./dist
-            publish_branch: gh-pages
-
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          publish_branch: gh-pages
